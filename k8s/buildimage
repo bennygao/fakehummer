@@ -1,0 +1,8 @@
+#/bin/sh
+
+workdir=`pwd`
+cd ..
+gradle clean build
+cp build/distributions/fakehummer-1.0.1.tar $workdir/docker
+cd $workdir
+docker build -t 'fakehummer:1.0.1' docker

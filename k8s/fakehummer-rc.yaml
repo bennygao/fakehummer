@@ -17,5 +17,5 @@ spec:
           ports:
             - containerPort: 8080
           env:
-            - name: ZK_SERVERS
-              value: '192.168.2.5:2181'
+            - name: REDIS_SERVER
+              value: '192.168.0.6:6379'

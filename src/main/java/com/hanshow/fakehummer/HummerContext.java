@@ -1,6 +1,8 @@
 package com.hanshow.fakehummer;
 
 import lombok.Getter;
+import redis.clients.jedis.HostAndPort;
+import redis.clients.jedis.Jedis;
 
 import java.net.InetAddress;
 import java.util.Date;
@@ -26,5 +28,10 @@ public class HummerContext {
         } catch (Throwable t) {
             throw new RuntimeException(t);
         }
+    }
+
+    public Jedis getJedis() {
+        HostAndPort redisServer = HostAndPort.parseString(System.getenv("REDIS_SERVER"));
+        return new Jedis(redisServer.getHost(), redisServer.getPort());
     }
 }
