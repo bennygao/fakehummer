@@ -1,4 +1,7 @@
 = 构建FakeHummer的Kubernetes环境
+:toc:
+:numbered:
+:source-highlighter: pygments
 
 == 创建FakeHummer的docker镜像
 
@@ -49,7 +52,7 @@ $IMAGE_CONTEXT
 === 创建fakehummer镜像
 调用 `docker build` 命令创建fakehummer镜像。
 
-[source,text]
+[source,shell]
 ----
 $ docker build -t 'fakehummer:1.0.1' $IMAGE_CONTEXT
 Sending build context to Docker daemon  206.4MB
@@ -84,7 +87,7 @@ Successfully tagged fakehummer:1.0.1
 ----
 
 用 `docker images` 命令可以查看fakehummer镜像是否创建成功。
-[source,text]
+[source,shell]
 ----
 $ docker images
 REPOSITORY                                 TAG                 IMAGE ID            CREATED             SIZE
@@ -94,7 +97,7 @@ fakehummer                                 1.0.1               3b8f5b362c3e     
 == 以容器的方式启动fakehummer
 用 `docker run` 命令以容器的方式启动创建好的fakehummer。
 
-[source,text]
+[source,shell]
 ----
 $ docker run -d -p 8888:8080 --name fakehummer fakehummer:1.0.1
 a4294869f7dbe02db1c59f51145381c8f9cb74d7011b8ddedbc7a0dafff91e7a
@@ -105,7 +108,7 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 ----
 
 `-p 8888:8080` 选项把容器的8080端口映射到宿主机的8888端口，这样就可以通过访问宿主机的8888端口访问容器的8080端口。
-[source,text]
+[source,shell]
 ----
 $ curl http://localhost:8888/info
 {
@@ -124,7 +127,7 @@ $ curl http://localhost:8888/info
 ====
 
 用 `docker exec` 进入正在运行的fakehummer容器。
-[source,text]
+[source,shell]
 ----
 $ docker exec -it fakehummer /bin/bash
 ----
@@ -171,7 +174,7 @@ $ docker exec -it fakehummer /bin/bash
 -------------
 
 用 `kubectl create` 命令创建FakeHummer的ReplicationController。
-[source,text]
+[source,shell]
 ----
 $ kubectl create -f fakehummer-rc.yaml
 replicationcontroller "fakehummer" created
@@ -205,7 +208,7 @@ k8s自动用fakehummer镜像创建了一个容器并已启动。
 ----
 
 用 `kubectl create` 命令创建FakeHummer的Service。
-[source,text]
+[source,shell]
 ----
 $ kubectl create -f fakehummer-svc.yaml
 service "hummer" created
@@ -228,5 +231,7 @@ $ curl http://localhost:30001/info
 
 [NOTE]
 ====
-k8s强制要求容器映射到宿主机的端口号只能在 `30000~32767` 区间。
+k8s强制要求容器映射到宿主机的端口号只能在 `30000~32767` 范围。如果要修改可用的端口范围，比如改成1-65535，则在apiserver的启动命令里面添加启动参数 `–service-node-port-range=1-65535`。
 ====
+
+在k8s cluster的每一个node上都会创建并监听Service的端口(这个例子是 `30001`)，访问任何一个node的30001端口，都会被k8s转发到Service所在pod的8080端口。
