@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: fakehummer
+spec:
+  replicas: 1
+  selector:
+    app: hummer
+  template:
+    metadata:
+      labels:
+        app: hummer
+    spec:
+      containers:
+        - name: hummer
+          image: fakehummer:1.0.1
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ZK_SERVERS
+              value: '192.168.2.5:2181'

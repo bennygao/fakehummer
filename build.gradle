@@ -1,0 +1,73 @@
+plugins {
+    id 'application'
+    id 'java'
+}
+
+group 'com.hanshow'
+version '1.0.1'
+def buildName = "rc1"
+
+sourceCompatibility = 1.8
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    compile group: 'org.apache.commons', name: 'commons-configuration2', version: '2.3'
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.18.2'
+
+    compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.11.1'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-web', version: '2.11.1'
+    compile group: 'org.slf4j', name: 'jul-to-slf4j', version: '1.7.25'
+
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.6'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.6'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.6'
+    compile group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-json-provider', version: '2.9.6'
+
+    compile group: 'org.eclipse.jetty', name: 'jetty-server', version: '9.4.12.v20180830'
+    compile group: 'org.eclipse.jetty', name: 'jetty-http', version: '9.4.12.v20180830'
+    compile group: 'org.eclipse.jetty', name: 'jetty-io', version: '9.4.12.v20180830'
+    compile group: 'org.eclipse.jetty', name: 'jetty-security', version: '9.4.12.v20180830'
+    compile group: 'org.eclipse.jetty', name: 'jetty-servlet', version: '9.4.12.v20180830'
+    compile group: 'org.eclipse.jetty', name: 'jetty-servlets', version: '9.4.12.v20180830'
+    compile group: 'org.eclipse.jetty', name: 'jetty-util', version: '9.4.12.v20180830'
+    compile group: 'org.eclipse.jetty', name: 'jetty-annotations', version: '9.4.12.v20180830'
+    compile group: 'org.eclipse.jetty', name: 'jetty-webapp', version: '9.4.12.v20180830'
+    compile group: 'org.eclipse.jetty', name: 'jetty-jsp', version: '9.2.26.v20180806'
+
+    compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet', version: '2.27'
+    compile group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version: '2.27'
+    compile group: 'org.glassfish.jersey.media', name: 'jersey-media-jaxb', version: '2.27'
+    compile group: 'org.glassfish.jersey.media', name: 'jersey-media-multipart', version: '2.27'
+}
+
+startScripts {
+    // 设置esl-working的启动类
+    mainClassName = 'com.hanshow.fakehummer.FakeHummer'
+
+    // 设置运行时刻JVM参数, 必须指定-Dapp.home
+    defaultJvmOpts = ['-Dapp.home=INSTALL_HOME', '-Dfile.encoding=UTF-8', '-Djava.awt.headless=true',
+                      '-Xms2048m', '-Xmx2048m', '-XX:MaxDirectMemorySize=256m',
+                      '-XX:+UseG1GC', '-XX:MaxGCPauseMillis=200']
+
+    // 增加${app.home}/config目录到运行时刻classpath中
+    classpath = files('APP_CLASSPATH')
+    doLast {
+        def windowsScriptFile = file getWindowsScript()
+        windowsScriptFile.text = windowsScriptFile.text
+                .replace('%APP_HOME%\\lib\\APP_CLASSPATH', '%APP_HOME%\\config;%APP_HOME%\\lib\\*')
+                .replace('INSTALL_HOME', '%APP_HOME%')
+
+        def unixScriptFile = file getUnixScript()
+        unixScriptFile.text = unixScriptFile.text
+                .replace('$APP_HOME/lib/APP_CLASSPATH', '$APP_HOME/config:$APP_HOME/lib/*')
+                .replace('INSTALL_HOME', '$APP_HOME')
+    }
+}

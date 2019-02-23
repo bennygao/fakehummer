@@ -1,0 +1,232 @@
+= 构建FakeHummer的Kubernetes环境
+
+== 创建FakeHummer的docker镜像
+
+=== 创建Dockerfile上下文目录
+创建一个目录，以下内容中用 `$IMAGE_CONTEXT` 表示这个目录的路径。
+
+=== 把镜像依赖的应用文件拷贝到上下文目录
+FakeHummer依赖的应用文件包括Oracle JRE8和FakeHummer自己的发行包，把这两个文件拷贝到上下文目录中。
+[source,text]
+----
+$IMAGE_CONTEXT
+|
++-- jre-8u201-linux-x64.tar.gz
+|
++-- fakehummer-1.0.1.tar
+----
+
+=== 创建Dockerfile
+在 `IMAGE_CONTEXT` 中创建一个名称为 `Dockerfile` 的文件，用文本编辑器编辑为如下内容。
+
+[source,Dockerfile]
+----
+FROM centos
+
+ADD jre-8u201-linux-x64.tar.gz /usr/local
+ADD fakehummer-1.0.1.tar /usr/local
+
+ENV JAVA_HOME=/usr/local/jre1.8.0_201
+ENV APP_HOME=/usr/local/fakehummer-1.0.1
+ENV PATH=$JAVA_HOME/bin:$APP_HOME/bin:$PATH
+
+CMD ["fakehummer"]
+EXPOSE 8080
+----
+
+此时 `$IMAGE_CONTEXT` 路径中的内容应该为：
+[source,text]
+----
+$IMAGE_CONTEXT
+|
++-- jre-8u201-linux-x64.tar.gz
+|
++-- fakehummer-1.0.1.tar
+|
++-- Dockerfile
+----
+
+=== 创建fakehummer镜像
+调用 `docker build` 命令创建fakehummer镜像。
+
+[source,text]
+----
+$ docker build -t 'fakehummer:1.0.1' $IMAGE_CONTEXT
+Sending build context to Docker daemon  206.4MB
+Step 1/8 : FROM centos
+ ---> 1e1148e4cc2c
+Step 2/8 : ADD jdk-8u152-linux-x64.tar.gz /usr/local
+ ---> c3750df112c2
+Step 3/8 : ADD fakehummer-1.0.1.tar /usr/local
+ ---> 9092c0a75b07
+Step 4/8 : ENV JAVA_HOME=/usr/local/jdk1.8.0_152
+ ---> Running in 0ec94baa59e2
+Removing intermediate container 0ec94baa59e2
+ ---> 6bad98b7339f
+Step 5/8 : ENV APP_HOME=/usr/local/fakehummer-1.0.1
+ ---> Running in dcd023b46bbe
+Removing intermediate container dcd023b46bbe
+ ---> 921e72aabaf9
+Step 6/8 : ENV PATH=$JAVA_HOME/bin:$APP_HOME/bin:$PATH
+ ---> Running in b5ba97894694
+Removing intermediate container b5ba97894694
+ ---> 4632227fa7cd
+Step 7/8 : CMD ["fakehummer"]
+ ---> Running in 40301b97462f
+Removing intermediate container 40301b97462f
+ ---> 335fb4a600c0
+Step 8/8 : EXPOSE 8080
+ ---> Running in 787b251bf5d5
+Removing intermediate container 787b251bf5d5
+ ---> 585214e5670c
+Successfully built 585214e5670c
+Successfully tagged fakehummer:1.0.1
+----
+
+用 `docker images` 命令可以查看fakehummer镜像是否创建成功。
+[source,text]
+----
+$ docker images
+REPOSITORY                                 TAG                 IMAGE ID            CREATED             SIZE
+fakehummer                                 1.0.1               3b8f5b362c3e        2 minutes ago       448MB
+----
+
+== 以容器的方式启动fakehummer
+用 `docker run` 命令以容器的方式启动创建好的fakehummer。
+
+[source,text]
+----
+$ docker run -d -p 8888:8080 --name fakehummer fakehummer:1.0.1
+a4294869f7dbe02db1c59f51145381c8f9cb74d7011b8ddedbc7a0dafff91e7a
+
+$ docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS                    NAMES
+51862b1e03dc        fakehummer:1.0.1    "fakehummer"        31 seconds ago      Up 29 seconds       0.0.0.0:8888->8080/tcp   fakehummer
+----
+
+`-p 8888:8080` 选项把容器的8080端口映射到宿主机的8888端口，这样就可以通过访问宿主机的8888端口访问容器的8080端口。
+[source,text]
+----
+$ curl http://localhost:8888/info
+{
+  "code" : 0,
+  "errorMessage" : "Success",
+  "data" : {
+    "address" : "51862b1e03dc",
+    "startTime" : "2019-02-22 07:18:24"
+  }
+}
+----
+
+[NOTE]
+====
+容器ID `51862b1e03dc` 会作为容器的hostname，在应用代码中用获得hostname的API会得到这个值。
+====
+
+用 `docker exec` 进入正在运行的fakehummer容器。
+[source,text]
+----
+$ docker exec -it fakehummer /bin/bash
+----
+进入容器后，就可以在命令行用 `ps` `top` 等命令查看容器的运行情况。
+
+[NOTE]
+====
+进入容器退出时不能用 `exit` 命令，也不能用 `^c`，这样会导致整个容器停止。应该先按 `^p` 再按 `^q` 这样可以退出并不终止容器的运行。
+====
+
+=== 停止fakehummer容器运行
+`docker stop fakehummer` 命令可以停止fakehummer容器的运行。
+
+`docker rm fakehummer` 命令可以删除fakehummer容器。
+
+`docker rmi fakehummer:1.0.1` 命令可以删除fakehummer镜像。
+
+== 以k8s Service方式启动FakeHummer
+=== 创建ReplicationController
+编辑创建 `fakehummer-rc.yaml` 文件，内容如下：
+[source,yaml]
+-------------
+  apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    name: fakehummer
+  spec:
+    replicas: 1
+    selector:
+      app: hummer
+    template:
+      metadata:
+        labels:
+          app: hummer
+      spec:
+        containers:
+          - name: hummer
+            image: fakehummer:1.0.1
+            ports:
+              - containerPort: 8080
+            env:
+              - name: ZK_SERVERS
+                value: '192.168.2.5:2181'
+-------------
+
+用 `kubectl create` 命令创建FakeHummer的ReplicationController。
+[source,text]
+----
+$ kubectl create -f fakehummer-rc.yaml
+replicationcontroller "fakehummer" created
+
+$ kubectl get rc
+NAME         DESIRED   CURRENT   READY     AGE
+fakehummer   1         1         1         10s
+
+$ docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+37f905912a73        3b8f5b362c3e        "fakehummer"        18 seconds ago      Up 17 seconds                           k8s_hummer_fakehummer-kdssv_default_29a79f14-3685-11e9-bea8-025000000001_0
+----
+
+k8s自动用fakehummer镜像创建了一个容器并已启动。
+
+=== 创建Service
+编辑创建 `fakehummer-svc.yaml`，内容如下：
+[source,yaml]
+----
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: hummer
+  spec:
+    type: NodePort
+    ports:
+      - port: 8080
+        nodePort: 30001
+    selector:
+      app: hummer
+----
+
+用 `kubectl create` 命令创建FakeHummer的Service。
+[source,text]
+----
+$ kubectl create -f fakehummer-svc.yaml
+service "hummer" created
+
+$ kubectl get svc
+NAME         TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
+hummer       NodePort    10.106.50.15   <none>        8080:30001/TCP   5s
+kubernetes   ClusterIP   10.96.0.1      <none>        443/TCP          3d
+
+$ curl http://localhost:30001/info
+{
+  "code" : 0,
+  "errorMessage" : "Success",
+  "data" : {
+    "address" : "fakehummer-kdssv",
+    "startTime" : "2019-02-22 09:35:19"
+  }
+}
+----
+
+[NOTE]
+====
+k8s强制要求容器映射到宿主机的端口号只能在 `30000~32767` 区间。
+====

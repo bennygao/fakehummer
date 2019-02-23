@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout charset="${sys:sun.jnu.encoding}"
+                           pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %c:%L [%t] %-5level - %msg %n" />
+        </Console>
+        <!--
+        <RollingFile name="Main" fileName="${sys:app.home}/log/main.log"
+                     filePattern="${sys:app.home}/log/main_%d{yyyy-MM-dd}.log.gz">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %c [%t] %-5level - %msg %n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="false" interval="1" />
+            </Policies>
+        </RollingFile>
+        -->
+    </Appenders>
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="Console" />
+        </Root>
+    </Loggers>
+</Configuration>
