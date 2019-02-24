@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.7.1">
+<meta name="generator" content="Asciidoctor 1.5.8">
 <title>构建FakeHummer的Kubernetes环境</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -79,7 +79,7 @@ h2{font-size:1.6875em}
 h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
 h4,h5{font-size:1.125em}
 h6{font-size:1em}
-hr{border:solid #ddddd8;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em;height:0}
+hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em;height:0}
 em,i{font-style:italic;line-height:inherit}
 strong,b{font-weight:bold;line-height:inherit}
 small{font-size:60%;line-height:inherit}
@@ -141,9 +141,9 @@ p a>code:hover{color:rgba(0,0,0,.9)}
 #content{margin-top:1.25em}
 #content::before{content:none}
 #header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
-#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #ddddd8}
-#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #ddddd8;padding-bottom:8px}
-#header .details{border-bottom:1px solid #ddddd8;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:-ms-flexbox;display:-webkit-flex;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:-ms-flexbox;display:-webkit-flex;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap}
 #header .details span:first-child{margin-left:-.125em}
 #header .details span.email a{color:rgba(0,0,0,.85)}
 #header .details br{display:none}
@@ -152,8 +152,8 @@ p a>code:hover{color:rgba(0,0,0,.9)}
 #header .details br+span#revremark::before{content:"\00a0|\00a0"}
 #header #revnumber{text-transform:capitalize}
 #header #revnumber::after{content:"\00a0"}
-#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #ddddd8;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
-#toc{border-bottom:1px solid #efefed;padding-bottom:.5em}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #dddddf;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #e7e7e9;padding-bottom:.5em}
 #toc>ul{margin-left:.125em}
 #toc ul.sectlevel0>li>a{font-style:italic}
 #toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
@@ -164,13 +164,13 @@ p a>code:hover{color:rgba(0,0,0,.9)}
 #toctitle{color:#7a2518;font-size:1.2em}
 @media screen and (min-width:768px){#toctitle{font-size:1.375em}
 body.toc2{padding-left:15em;padding-right:0}
-#toc.toc2{margin-top:0!important;background-color:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #efefed;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2{margin-top:0!important;background-color:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
 #toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
 #toc.toc2>ul{font-size:.9em;margin-bottom:0}
 #toc.toc2 ul ul{margin-left:0;padding-left:1em}
 #toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
 body.toc2.toc-right{padding-left:0;padding-right:15em}
-body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #efefed;left:auto;right:0}}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9;left:auto;right:0}}
 @media screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
 #toc.toc2{width:20em}
 #toc.toc2 #toctitle{font-size:1.375em}
@@ -187,7 +187,7 @@ body.toc2.toc-right{padding-left:0;padding-right:20em}}
 @media screen and (min-width:768px){#content{margin-bottom:1.25em}
 .sect1{padding-bottom:1.25em}}
 .sect1:last-child{padding-bottom:0}
-.sect1+.sect1{border-top:1px solid #efefed}
+.sect1+.sect1{border-top:1px solid #e7e7e9}
 #content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
 #content h1>a.anchor::before,h2>a.anchor::before,h3>a.anchor::before,#toctitle>a.anchor::before,.sidebarblock>.content>.title>a.anchor::before,h4>a.anchor::before,h5>a.anchor::before,h6>a.anchor::before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
 #content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
@@ -202,7 +202,7 @@ table.tableblock #preamble>.sectionbody>[class="paragraph"]:first-of-type p{font
 .admonitionblock>table td.icon{text-align:center;width:80px}
 .admonitionblock>table td.icon img{max-width:none}
 .admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
-.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #ddddd8;color:rgba(0,0,0,.6)}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6)}
 .admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
 .exampleblock>.content{border-style:solid;border-width:1px;border-color:#e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;-webkit-border-radius:4px;border-radius:4px}
 .exampleblock>.content>:first-child{margin-top:0}
@@ -214,10 +214,10 @@ table.tableblock #preamble>.sectionbody>[class="paragraph"]:first-of-type p{font
 .exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
 .literalblock pre,.listingblock pre:not(.highlight),.listingblock pre[class="highlight"],.listingblock pre[class^="highlight "],.listingblock pre.CodeRay,.listingblock pre.prettyprint{background:#f7f7f8}
 .sidebarblock .literalblock pre,.sidebarblock .listingblock pre:not(.highlight),.sidebarblock .listingblock pre[class="highlight"],.sidebarblock .listingblock pre[class^="highlight "],.sidebarblock .listingblock pre.CodeRay,.sidebarblock .listingblock pre.prettyprint{background:#f2f1f1}
-.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{-webkit-border-radius:4px;border-radius:4px;word-wrap:break-word;padding:1em;font-size:.8125em}
-.literalblock pre.nowrap,.literalblock pre[class].nowrap,.listingblock pre.nowrap,.listingblock pre[class].nowrap{overflow-x:auto;white-space:pre;word-wrap:normal}
+.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{-webkit-border-radius:4px;border-radius:4px;word-wrap:break-word;overflow-x:auto;padding:1em;font-size:.8125em}
 @media screen and (min-width:768px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:.90625em}}
 @media screen and (min-width:1280px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:1em}}
+.literalblock pre.nowrap,.literalblock pre.nowrap pre,.listingblock pre.nowrap,.listingblock pre.nowrap pre{white-space:pre;word-wrap:normal}
 .literalblock.output pre{color:#f7f7f8;background-color:rgba(0,0,0,.9)}
 .listingblock pre.highlightjs{padding:0}
 .listingblock pre.highlightjs>code{padding:1em;-webkit-border-radius:4px;border-radius:4px}
@@ -230,19 +230,16 @@ table.tableblock #preamble>.sectionbody>[class="paragraph"]:first-of-type p{font
 table.pyhltable{border-collapse:separate;border:0;margin-bottom:0;background:none}
 table.pyhltable td{vertical-align:top;padding-top:0;padding-bottom:0;line-height:1.45}
 table.pyhltable td.code{padding-left:.75em;padding-right:0}
-pre.pygments .lineno,table.pyhltable td:not(.code){color:#999;padding-left:0;padding-right:.5em;border-right:1px solid #ddddd8}
+pre.pygments .lineno,table.pyhltable td:not(.code){color:#999;padding-left:0;padding-right:.5em;border-right:1px solid #dddddf}
 pre.pygments .lineno{display:inline-block;margin-right:.25em}
 table.pyhltable .linenodiv{background:none!important;padding-right:0!important}
 .quoteblock{margin:0 1em 1.25em 1.5em;display:table}
 .quoteblock>.title{margin-left:-1.5em;margin-bottom:.75em}
-.quoteblock blockquote,.quoteblock blockquote p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
 .quoteblock blockquote{margin:0;padding:0;border:0}
 .quoteblock blockquote::before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
 .quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
-.quoteblock .attribution{margin-top:.5em;margin-right:.5ex;text-align:right}
-.quoteblock .quoteblock{margin-left:0;margin-right:0;padding:.5em 0;border-left:3px solid rgba(0,0,0,.6)}
-.quoteblock .quoteblock blockquote{padding:0 0 0 .75em}
-.quoteblock .quoteblock blockquote::before{display:none}
+.quoteblock .attribution{margin-top:.75em;margin-right:.5ex;text-align:right}
 .verseblock{margin:0 1em 1.25em}
 .verseblock pre{font-family:"Open Sans","DejaVu Sans",sans;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
 .verseblock pre strong{font-weight:400}
@@ -250,10 +247,13 @@ table.pyhltable .linenodiv{background:none!important;padding-right:0!important}
 .quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
 .quoteblock .attribution br,.verseblock .attribution br{display:none}
 .quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract blockquote::before,.quoteblock.excerpt blockquote::before,.quoteblock .quoteblock blockquote::before{display:none}
+.quoteblock.abstract blockquote,.quoteblock.abstract p,.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{line-height:1.6;word-spacing:0}
 .quoteblock.abstract{margin:0 1em 1.25em;display:block}
 .quoteblock.abstract>.title{margin:0 0 .375em;font-size:1.15em;text-align:center}
-.quoteblock.abstract blockquote,.quoteblock.abstract blockquote p{word-spacing:0;line-height:1.6}
-.quoteblock.abstract blockquote::before,.quoteblock.abstract p::before{display:none}
+.quoteblock.excerpt,.quoteblock .quoteblock{margin:0 0 1.25em;padding:0 0 .25em 1em;border-left:.25em solid #dddddf}
+.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
+.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;text-align:left;margin-right:0}
 table.tableblock{max-width:100%;border-collapse:separate}
 p.tableblock:last-child{margin-bottom:0}
 td.tableblock>.content{margin-bottom:-1.25em}
@@ -312,8 +312,8 @@ td.hdlist1{font-weight:bold;padding-bottom:1.25em}
 .colist td:not([class]):first-child img{max-width:none}
 .colist td:not([class]):last-child{padding:.25em 0}
 .thumb,.th{line-height:0;display:inline-block;border:solid 4px #fff;-webkit-box-shadow:0 0 0 1px #ddd;box-shadow:0 0 0 1px #ddd}
-.imageblock.left,.imageblock[style*="float: left"]{margin:.25em .625em 1.25em 0}
-.imageblock.right,.imageblock[style*="float: right"]{margin:.25em 0 1.25em .625em}
+.imageblock.left{margin:.25em .625em 1.25em 0}
+.imageblock.right{margin:.25em 0 1.25em .625em}
 .imageblock>.title{margin-bottom:0}
 .imageblock.thumb,.imageblock.th{border-width:6px}
 .imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
@@ -407,7 +407,7 @@ svg{max-width:100%}
 p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
 h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
 #toc,.sidebarblock,.exampleblock>.content{background:none!important}
-#toc{border-bottom:1px solid #ddddd8!important;padding-bottom:0!important}
+#toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
 body.book #header{text-align:center}
 body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em}
 body.book #header .details{border:0!important;display:block;padding:0!important}
@@ -429,49 +429,82 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 #footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
+<style>
+/* Pygments CSS disabled. Pygments is not available. */
+</style>
 </head>
 <body class="article">
 <div id="header">
 <h1>构建FakeHummer的Kubernetes环境</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_创建fakehummer的docker镜像">1. 创建FakeHummer的docker镜像</a>
+<ul class="sectlevel2">
+<li><a href="#_创建dockerfile上下文目录">1.1. 创建Dockerfile上下文目录</a></li>
+<li><a href="#_把镜像依赖的应用文件拷贝到上下文目录">1.2. 把镜像依赖的应用文件拷贝到上下文目录</a></li>
+<li><a href="#_创建dockerfile">1.3. 创建Dockerfile</a></li>
+<li><a href="#_创建fakehummer镜像">1.4. 创建fakehummer镜像</a></li>
+</ul>
+</li>
+<li><a href="#_以容器的方式启动fakehummer">2. 以容器的方式启动fakehummer</a>
+<ul class="sectlevel2">
+<li><a href="#_停止fakehummer容器运行">2.1. 停止fakehummer容器运行</a></li>
+</ul>
+</li>
+<li><a href="#_以k8s_service方式启动fakehummer">3. 以k8s Service方式启动FakeHummer</a>
+<ul class="sectlevel2">
+<li><a href="#_创建replicationcontroller">3.1. 创建ReplicationController</a></li>
+<li><a href="#_创建service">3.2. 创建Service</a></li>
+</ul>
+</li>
+<li><a href="#_k8s_dashboard">4. k8s dashboard</a>
+<ul class="sectlevel2">
+<li><a href="#_安装k8s_dashboard">4.1. 安装k8s dashboard</a></li>
+<li><a href="#_登录dashboard">4.2. 登录dashboard</a></li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_创建fakehummer的docker镜像">创建FakeHummer的docker镜像</h2>
+<h2 id="_创建fakehummer的docker镜像">1. 创建FakeHummer的docker镜像</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_创建dockerfile上下文目录">创建Dockerfile上下文目录</h3>
+<h3 id="_创建dockerfile上下文目录">1.1. 创建Dockerfile上下文目录</h3>
 <div class="paragraph">
 <p>创建一个目录，以下内容中用 <code>$IMAGE_CONTEXT</code> 表示这个目录的路径。</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_把镜像依赖的应用文件拷贝到上下文目录">把镜像依赖的应用文件拷贝到上下文目录</h3>
+<h3 id="_把镜像依赖的应用文件拷贝到上下文目录">1.2. 把镜像依赖的应用文件拷贝到上下文目录</h3>
 <div class="paragraph">
-<p>FakeHummer依赖的应用文件包括Oracle JDK8和FakeHummer自己的发行包，把这两个文件拷贝到上下文目录中。</p>
+<p>FakeHummer依赖的应用文件包括Oracle JRE8和FakeHummer自己的发行包，把这两个文件拷贝到上下文目录中。</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-text" data-lang="text">$IMAGE_CONTEXT
+<pre class="pygments highlight"><code data-lang="text">$IMAGE_CONTEXT
 |
-+-- jdk-8u152-linux-x64.tar.gz
++-- jre-8u201-linux-x64.tar.gz
 |
 +-- fakehummer-1.0.1.tar</code></pre>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_创建dockerfile">创建Dockerfile</h3>
+<h3 id="_创建dockerfile">1.3. 创建Dockerfile</h3>
 <div class="paragraph">
 <p>在 <code>IMAGE_CONTEXT</code> 中创建一个名称为 <code>Dockerfile</code> 的文件，用文本编辑器编辑为如下内容。</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-Dockerfile" data-lang="Dockerfile">FROM centos
+<pre class="pygments highlight"><code data-lang="Dockerfile">FROM centos
 
-ADD jdk-8u152-linux-x64.tar.gz /usr/local
+ADD jre-8u201-linux-x64.tar.gz /usr/local
 ADD fakehummer-1.0.1.tar /usr/local
 
-ENV JAVA_HOME=/usr/local/jdk1.8.0_152
+ENV JAVA_HOME=/usr/local/jre1.8.0_201
 ENV APP_HOME=/usr/local/fakehummer-1.0.1
 ENV PATH=$JAVA_HOME/bin:$APP_HOME/bin:$PATH
 
@@ -484,9 +517,9 @@ EXPOSE 8080</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-text" data-lang="text">$IMAGE_CONTEXT
+<pre class="pygments highlight"><code data-lang="text">$IMAGE_CONTEXT
 |
-+-- jdk-8u152-linux-x64.tar.gz
++-- jre-8u201-linux-x64.tar.gz
 |
 +-- fakehummer-1.0.1.tar
 |
@@ -495,41 +528,41 @@ EXPOSE 8080</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_创建fakehummer镜像">创建fakehummer镜像</h3>
+<h3 id="_创建fakehummer镜像">1.4. 创建fakehummer镜像</h3>
 <div class="paragraph">
 <p>调用 <code>docker build</code> 命令创建fakehummer镜像。</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-text" data-lang="text">$ docker build -t 'fakehummer:1.0.1' docker
+<pre class="pygments highlight"><code data-lang="shell">$ docker build -t 'fakehummer:1.0.1' $IMAGE_CONTEXT
 Sending build context to Docker daemon  206.4MB
 Step 1/8 : FROM centos
  ---&gt; 1e1148e4cc2c
 Step 2/8 : ADD jdk-8u152-linux-x64.tar.gz /usr/local
- ---&gt; 68bf70c23e58
+ ---&gt; c3750df112c2
 Step 3/8 : ADD fakehummer-1.0.1.tar /usr/local
- ---&gt; a944e376ce18
+ ---&gt; 9092c0a75b07
 Step 4/8 : ENV JAVA_HOME=/usr/local/jdk1.8.0_152
- ---&gt; Running in 62a0fb51337f
-Removing intermediate container 62a0fb51337f
- ---&gt; 9e37bb1c86db
+ ---&gt; Running in 0ec94baa59e2
+Removing intermediate container 0ec94baa59e2
+ ---&gt; 6bad98b7339f
 Step 5/8 : ENV APP_HOME=/usr/local/fakehummer-1.0.1
- ---&gt; Running in 602abb199888
-Removing intermediate container 602abb199888
- ---&gt; 1c1d67a905de
+ ---&gt; Running in dcd023b46bbe
+Removing intermediate container dcd023b46bbe
+ ---&gt; 921e72aabaf9
 Step 6/8 : ENV PATH=$JAVA_HOME/bin:$APP_HOME/bin:$PATH
- ---&gt; Running in 9fe10169ee53
-Removing intermediate container 9fe10169ee53
- ---&gt; 783823214bd4
+ ---&gt; Running in b5ba97894694
+Removing intermediate container b5ba97894694
+ ---&gt; 4632227fa7cd
 Step 7/8 : CMD ["fakehummer"]
- ---&gt; Running in 99efe940d430
-Removing intermediate container 99efe940d430
- ---&gt; 39672feef193
+ ---&gt; Running in 40301b97462f
+Removing intermediate container 40301b97462f
+ ---&gt; 335fb4a600c0
 Step 8/8 : EXPOSE 8080
- ---&gt; Running in 60dc3517ffe3
-Removing intermediate container 60dc3517ffe3
- ---&gt; 9c7b4361d087
-Successfully built 9c7b4361d087
+ ---&gt; Running in 787b251bf5d5
+Removing intermediate container 787b251bf5d5
+ ---&gt; 585214e5670c
+Successfully built 585214e5670c
 Successfully tagged fakehummer:1.0.1</code></pre>
 </div>
 </div>
@@ -538,21 +571,23 @@ Successfully tagged fakehummer:1.0.1</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-text" data-lang="text">$ docker images
-docker images
+<pre class="pygments highlight"><code data-lang="shell">$ docker images
 REPOSITORY                                 TAG                 IMAGE ID            CREATED             SIZE
-fakehummer                                 1.0.1               9c7b4361d087        4 minutes ago       603MB</code></pre>
+fakehummer                                 1.0.1               3b8f5b362c3e        2 minutes ago       448MB</code></pre>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_以容器的方式启动fakehummer">以容器的方式启动fakehummer</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_以容器的方式启动fakehummer">2. 以容器的方式启动fakehummer</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>用 <code>docker run</code> 命令以容器的方式启动创建好的fakehummer。</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-text" data-lang="text">$ docker run -d -p 8888:8080 --name fakehummer fakehummer:1.0.1
+<pre class="pygments highlight"><code data-lang="shell">$ docker run -d -p 8888:8080 --name fakehummer fakehummer:1.0.1
 a4294869f7dbe02db1c59f51145381c8f9cb74d7011b8ddedbc7a0dafff91e7a
 
 $ docker ps
@@ -565,7 +600,7 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-text" data-lang="text">$ curl http://localhost:8888/info
+<pre class="pygments highlight"><code data-lang="shell">$ curl http://localhost:8888/info
 {
   "code" : 0,
   "errorMessage" : "Success",
@@ -595,7 +630,7 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-text" data-lang="text">$ docker exec -it fakehummer /bin/bash</code></pre>
+<pre class="pygments highlight"><code data-lang="shell">$ docker exec -it fakehummer /bin/bash</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -615,13 +650,184 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 </tr>
 </table>
 </div>
+<div class="sect2">
+<h3 id="_停止fakehummer容器运行">2.1. 停止fakehummer容器运行</h3>
+<div class="paragraph">
+<p><code>docker stop fakehummer</code> 命令可以停止fakehummer容器的运行。</p>
+</div>
+<div class="paragraph">
+<p><code>docker rm fakehummer</code> 命令可以删除fakehummer容器。</p>
+</div>
+<div class="paragraph">
+<p><code>docker rmi fakehummer:1.0.1</code> 命令可以删除fakehummer镜像。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_以k8s_service方式启动fakehummer">3. 以k8s Service方式启动FakeHummer</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_创建replicationcontroller">3.1. 创建ReplicationController</h3>
+<div class="paragraph">
+<p>编辑创建 <code>fakehummer-rc.yaml</code> 文件，内容如下：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="yaml">  apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    name: fakehummer
+  spec:
+    replicas: 1
+    selector:
+      app: hummer
+    template:
+      metadata:
+        labels:
+          app: hummer
+      spec:
+        containers:
+          - name: hummer
+            image: fakehummer:1.0.1
+            ports:
+              - containerPort: 8080
+            env:
+              - name: ZK_SERVERS
+                value: '192.168.2.5:2181'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>用 <code>kubectl create</code> 命令创建FakeHummer的ReplicationController。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="shell">$ kubectl create -f fakehummer-rc.yaml
+replicationcontroller "fakehummer" created
+
+$ kubectl get rc
+NAME         DESIRED   CURRENT   READY     AGE
+fakehummer   1         1         1         10s
+
+$ docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+37f905912a73        3b8f5b362c3e        "fakehummer"        18 seconds ago      Up 17 seconds                           k8s_hummer_fakehummer-kdssv_default_29a79f14-3685-11e9-bea8-025000000001_0</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>k8s自动用fakehummer镜像创建了一个容器并已启动。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_创建service">3.2. 创建Service</h3>
+<div class="paragraph">
+<p>编辑创建 <code>fakehummer-svc.yaml</code>，内容如下：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="yaml">  apiVersion: v1
+  kind: Service
+  metadata:
+    name: hummer
+  spec:
+    type: NodePort
+    ports:
+      - port: 8080
+        nodePort: 30001
+    selector:
+      app: hummer</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>用 <code>kubectl create</code> 命令创建FakeHummer的Service。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="shell">$ kubectl create -f fakehummer-svc.yaml
+service "hummer" created
+
+$ kubectl get svc
+NAME         TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
+hummer       NodePort    10.106.50.15   &lt;none&gt;        8080:30001/TCP   5s
+kubernetes   ClusterIP   10.96.0.1      &lt;none&gt;        443/TCP          3d
+
+$ curl http://localhost:30001/info
+{
+  "code" : 0,
+  "errorMessage" : "Success",
+  "data" : {
+    "address" : "fakehummer-kdssv",
+    "startTime" : "2019-02-22 09:35:19"
+  }
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>k8s强制要求容器映射到宿主机的端口号只能在 <code>30000~32767</code> 范围。如果要修改可用的端口范围，比如改成1-65535，则在apiserver的启动命令里面添加启动参数 <code>–service-node-port-range=1-65535</code>。</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>在k8s cluster的每一个node上都会创建并监听Service的端口(这个例子是 <code>30001</code>)，访问任何一个node的30001端口，都会被k8s转发到Service所在pod的8080端口。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_k8s_dashboard">4. k8s dashboard</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_安装k8s_dashboard">4.1. 安装k8s dashboard</h3>
+<div class="paragraph">
+<p>kubernetes官方提供了Web UI界面的dashboard，方便用户管理操作。详细参见 <a href="https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/" class="bare">https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="shell">$ kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/deploy/recommended/kubernetes-dashboard.yaml</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>打开一个系统终端，启动k8s API proxy。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="shell">$ kubectl proxy</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>打开浏览器访问URL <a href="http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/" class="bare">http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/</a> 就可以看到dashboard的登录界面。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_登录dashboard">4.2. 登录dashboard</h3>
+<div class="paragraph">
+<p>用以下命令获得集群的登录 <code>token</code>。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="shell">$ kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | awk '/^deployment-controller-token-/{print $1}') | awk '$1=="token:"{print $2}'
+eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJkZXBsb3ltZW50LWNvbnRyb2xsZXItdG9rZW4tZGM0cmYiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiZGVwbG95bWVudC1jb250cm9sbGVyIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiNDIwOThmNWMtMzczZi0xMWU5LTk2ODktMDI1MDAwMDAwMDAxIiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50Omt1YmUtc3lzdGVtOmRlcGxveW1lbnQtY29udHJvbGxlciJ9.olvkRuxchzO9FSJLB1WtugwaIIWsAbP--fJ0OXWW-rk8cb_T9cKqf4iNJj7vH_H9sl1LGl358SgBbY76q-EqWW5YGK1Z-a23xRKodX8miTCzFQ-LbOPWPVQsLyj2BKo4Qk5o2zG6uBlmZAdAeNoyzweeHiG52ZDAowXJ4ozPmqVNxAXs3sPijeXU1kyZXJQf6Vupqg6qUYac-oTBVChxmT4Wh5ptTEJNGlaskfrN9FVrjU3_RXaGKtuI7n5ixyoOhAvxqt-I87yi4nR6ScWczTdURE5rohp1ms3hADkbKlOTPTllID_SnnQDWg3WOOP5D2BOrT136yk_1qZxzuYXCA</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>把命令输出的一串字符完整地拷贝/粘贴到浏览器登录界面中即可登录。</p>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-02-22 15:22:57 CST
+Last updated 2019-02-24 00:08:14 +0800
 </div>
 </div>
 </body>

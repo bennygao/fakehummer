@@ -1,11 +1,14 @@
-apiVersion: v1
-kind: ReplicationController
+apiVersion: extensions/v1beta1
+kind: Deployment
 metadata:
-  name: rc-hummer-wumart-5001
+  name: dep-hummer-wumart-5001
 spec:
   replicas: 1
   selector:
-    app: hummer
+    matchLabels:
+      app: hummer
+    matchExpressions:
+      - {key: app, operator: In, values: [hummer]}
   template:
     metadata:
       name: pod-hummer-wumart-5001
