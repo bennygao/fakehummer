@@ -47,7 +47,7 @@ $IMAGE_CONTEXT
 === 创建fakehummer镜像
 调用 `docker build` 命令创建fakehummer镜像。
 
-[source,shell]
+[source,sh]
 ----
 $ docker build -t 'fakehummer:1.0.1' $IMAGE_CONTEXT
 Sending build context to Docker daemon  206.4MB
@@ -82,7 +82,7 @@ Successfully tagged fakehummer:1.0.1
 ----
 
 用 `docker images` 命令可以查看fakehummer镜像是否创建成功。
-[source,shell]
+[source,sh]
 ----
 $ docker images
 REPOSITORY                                 TAG                 IMAGE ID            CREATED             SIZE
@@ -92,7 +92,7 @@ fakehummer                                 1.0.1               3b8f5b362c3e     
 == 以容器的方式启动fakehummer
 用 `docker run` 命令以容器的方式启动创建好的fakehummer。
 
-[source,shell]
+[source,sh]
 ----
 $ docker run -d -p 8888:8080 --name fakehummer fakehummer:1.0.1
 a4294869f7dbe02db1c59f51145381c8f9cb74d7011b8ddedbc7a0dafff91e7a
@@ -103,7 +103,7 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 ----
 
 `-p 8888:8080` 选项把容器的8080端口映射到宿主机的8888端口，这样就可以通过访问宿主机的8888端口访问容器的8080端口。
-[source,shell]
+[source,sh]
 ----
 $ curl http://localhost:8888/info
 {
@@ -122,7 +122,7 @@ $ curl http://localhost:8888/info
 ====
 
 用 `docker exec` 进入正在运行的fakehummer容器。
-[source,shell]
+[source,sh]
 ----
 $ docker exec -it fakehummer /bin/bash
 ----
@@ -169,7 +169,7 @@ $ docker exec -it fakehummer /bin/bash
 -------------
 
 用 `kubectl create` 命令创建FakeHummer的ReplicationController。
-[source,shell]
+[source,sh]
 ----
 $ kubectl create -f fakehummer-rc.yaml
 replicationcontroller "fakehummer" created
@@ -203,7 +203,7 @@ k8s自动用fakehummer镜像创建了一个容器并已启动。
 ----
 
 用 `kubectl create` 命令创建FakeHummer的Service。
-[source,shell]
+[source,sh]
 ----
 $ kubectl create -f fakehummer-svc.yaml
 service "hummer" created
@@ -235,13 +235,13 @@ k8s强制要求容器映射到宿主机的端口号只能在 `30000~32767` 范�
 === 安装k8s dashboard
 kubernetes官方提供了Web UI界面的dashboard，方便用户管理操作。详细参见 https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/
 
-[source,shell]
+[source,sh]
 ----
 $ kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/deploy/recommended/kubernetes-dashboard.yaml
 ----
 
 打开一个系统终端，启动k8s API proxy。
-[source,shell]
+[source,sh]
 ----
 $ kubectl proxy
 ----
@@ -250,7 +250,7 @@ $ kubectl proxy
 
 === 登录dashboard
 用以下命令获得集群的登录 `token`。
-[source,shell]
+[source,sh]
 ----
 $ kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | awk '/^deployment-controller-token-/{print $1}') | awk '$1=="token:"{print $2}'
 eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJkZXBsb3ltZW50LWNvbnRyb2xsZXItdG9rZW4tZGM0cmYiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiZGVwbG95bWVudC1jb250cm9sbGVyIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiNDIwOThmNWMtMzczZi0xMWU5LTk2ODktMDI1MDAwMDAwMDAxIiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50Omt1YmUtc3lzdGVtOmRlcGxveW1lbnQtY29udHJvbGxlciJ9.olvkRuxchzO9FSJLB1WtugwaIIWsAbP--fJ0OXWW-rk8cb_T9cKqf4iNJj7vH_H9sl1LGl358SgBbY76q-EqWW5YGK1Z-a23xRKodX8miTCzFQ-LbOPWPVQsLyj2BKo4Qk5o2zG6uBlmZAdAeNoyzweeHiG52ZDAowXJ4ozPmqVNxAXs3sPijeXU1kyZXJQf6Vupqg6qUYac-oTBVChxmT4Wh5ptTEJNGlaskfrN9FVrjU3_RXaGKtuI7n5ixyoOhAvxqt-I87yi4nR6ScWczTdURE5rohp1ms3hADkbKlOTPTllID_SnnQDWg3WOOP5D2BOrT136yk_1qZxzuYXCA
@@ -263,17 +263,15 @@ eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiw
 虚机与宿主机之间共享剪贴板 https://my.oschina.net/tashi/blog/190060
 
 == 在三个CentOS7节点上安装k8s cluster
-中文博客1 http://www.525.life/article?id=1510739742331
-
-中文博客2 https://blog.csdn.net/maliao1123/article/details/79379390
+中文博客 https://www.codesheep.cn/2018/12/27/kubeadm-k8s1-13-1/
 
 官方文档 https://kubernetes.io/docs/setup/cri/#docker 有k8s依赖的docker的安装方法。
-[source,shell]
+[source,sh]
 ----
 # Install Docker CE
 ## Set up the repository
 ### Install required packages.
-    yum install yum-utils device-mapper-persistent-data lvm2
+yum install yum-utils device-mapper-persistent-data lvm2
 
 ### Add docker repository.
 yum-config-manager \
