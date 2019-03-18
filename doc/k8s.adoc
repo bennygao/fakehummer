@@ -231,6 +231,12 @@ k8s强制要求容器映射到宿主机的端口号只能在 `30000~32767` 范�
 
 在k8s cluster的每一个node上都会创建并监听Service的端口(这个例子是 `30001`)，访问任何一个node的30001端口，都会被k8s转发到Service所在pod的8080端口。
 
+[NOTE]
+====
+强制删除一个Pod，当删除Pod时状态总是处于 `Terminating` 状态。
+kubectl delete pod kubernetes-dashboard-5d686bd8cf-s6ln8 --namespace=kube-system `--grace-period=0 --force`
+====
+
 == k8s dashboard
 === 安装k8s dashboard
 kubernetes官方提供了Web UI界面的dashboard，方便用户管理操作。详细参见 https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/

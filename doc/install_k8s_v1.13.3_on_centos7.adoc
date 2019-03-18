@@ -10,23 +10,23 @@ https://yq.aliyun.com/articles/626118[CentOS7中用kubeadm安装Kubernetes]
 
 
 == 集群环境
-在3个运行CentOS7系统的节点上安装k8s集群，1个节点作为master，2个节点作为node。
+在3个运行CentOS7系统的节点上安装k8s集群，1个节点作为Master，2个节点作为Minion。
 
 .集群节点
 |===
 |IP地址 |hostname |身份
 
-|192.168.9.90
+|192.168.9.91
 |k8s-master
 |Master
 
-|192.168.9.90
-|k8s-node1
-|Node
+|192.168.9.95
+|k8s-node-1
+|Minion
 
 |192.168.9.90
 |k8s-node2
-|Node
+|Minion
 |===
 
 为了方便操作，可以在每个节点上设置ssh信任的证书，ssh登录节点时免去输密码的操作。
@@ -870,7 +870,7 @@ kube-system   kube-proxy-vlnpx                     1/1     Running   0          
 kube-system   kube-scheduler-k8s-master            1/1     Running   0          13m    192.168.9.91   k8s-master   <none>           <none>
 ----
 
-== 加入集群节点
+== 添加Minion集群节点
 === 在Master节点上创建永不过期的 `token`
 参考 http://www.cnblogs.com/justmine/p/8886675.html[k8s踩坑记 - kubeadm join 之 token 失效]，以及 https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-token/[kubeadm token]。
 
@@ -894,8 +894,8 @@ go4637.x28gkcn67o74bbni   <forever>   <never>   authentication,signing   <none> 
 d208bd3914178197deff369105670f5f0c211a556682201adf22700eeccc8966
 ----
 
-=== 加入集群
-在Node节点上运行 `kubeadm join --token <token> <master-ip>:<master-port> --discovery-token-ca-cert-hash sha256:<hash>` 加入集群。
+=== Minion节点加入集群
+在要加入集群的Minion节点上运行 `kubeadm join --token <token> <master-ip>:<master-port> --discovery-token-ca-cert-hash sha256:<hash>` 加入集群。
 [source,text]
 ----
 [root@k8s-node-template ~]# kubeadm join --token go4637.x28gkcn67o74bbni k8s-master:6443 --discovery-token-ca-cert-hash sha256:d208bd3914178197deff369105670f5f0c211a556682201adf22700eeccc8966
@@ -1006,3 +1006,18 @@ to reset your system's IPVS tables.
 
 === 拆除整个集群
 在Master节点上运行 `kubeadm reset` 可以拆除整个集群，并重置所有集群配置。集群拆除后，需要从 `kubeadm init` 命令开始重新初始化集群Master，并逐一加入各个Node。
+
+== kubernetes Web UI (Dashboard)
+=== 安装kubernetes dashboard
+https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/[kubernetes dashboard]是kubernetes官方提供的一个基于Web UI的集群监控管理工具。kubernets的缺省安装中没有包括dashboard组件，需要运行以下命令安装。
+[source,sh]
+----
+kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/deploy/recommended/kubernetes-dashboard.yaml
+----
+
+=== 卸载kubernetes dashboard
+[source,sh]
+----
+kubectl get secret,sa,role,rolebinding,services,deployments --namespace=kube-system | grep dashboard
+----
+依次用 `kubectl delete` 命令删除列出的资源。
